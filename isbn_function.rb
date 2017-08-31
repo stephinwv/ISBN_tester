@@ -2,8 +2,9 @@ isbn_num = "0471958697"
 def isbn_remove(isbn_num)
 #remove spaces and hyphens
     isbn_num.gsub!(/[-, ]/,"")
-
-     # [^0-9A-Za-z] saw someone else use this but I'm not sure yet what it means.
+    #gsub literally returns a copy of str with the all occurrences of pattern 
+    #substituted for the second argument. 
+ 
     isbn_num.split(",").map(&:to_i)
     #.split (',') changes the string to an array, and .map basically maps each posiiton and 
     #(&:to_i) tells when map to also change each to and integer.
