@@ -1,102 +1,107 @@
 isbn_num = "0471958697"	
 def isbn_remove(isbn_num)
-
-    isbn_num.gsub!(/[-, ]/,"")
-    # [^0-9A-Za-z] saw someone else use this but I'm not sure yet what it means.
-    clean_isbn = isbn_num.split(",").map(&:to_i)
-    clean_isbn
-    p "#{clean_isbn}"
+#remove spaces and hyphens
+    isbn_num.delete(' ''-') 
 end
-def isbn_length(isbn_num)
-     if clean_isbn.length == 10
+
+def length_letter10(isbn_num)
+	#Made two functions to do letter check differently based on length
+#If it is length 10 it checks only the first 9 characters
+#using .chop because the last character CAN be a letter.
+	num = isbn_num.chop
+     if num.length == 0
     	true
-    	elsif clean_isbn.length == 13
-    	true
+    	
     	else
     	false
     end	
 end
 
+def legnth_letter13(isbn_num)
+	#If it is 13 it checks all characters because there can be no letters.
+		num = isbn_num.delete('0-9')
+		if num.length == 0
+			true
+		else
+			false
+		end
+end
+
+def check_last_index10(isbn_num)
+	#Checks to see if the item in the last index position is either a single digit # or x.
+	if isbn_num[-1].match(/[0-9xX]/) 
+		true
+	else
+		false
+	end
+end
+
+
+
 def check_sum10(isbn_num)
+	#Does the check digit calculation for ISBN 10, returns true if valid, false if not.
+	#Assigning variables for counters, and valid starts as false.  Will get assigned
+	#true only if conditions/calculations are met.
+	valid = false
 	sum = 0
-	clean_isbn.each_with_index do |value,index|
-		sum = sum + ((index+1).to_i*value.to_i)
+	index_pos = 0
+	index_count = 1
+	#Use chop here because we dont use the last character to calculate the check digit.
+	isbn = isbn_num.chop
+	#Loop length of 9, isbn_num length is 10, we .chop it to 9.
+	#Iterates through each index position of the string and multiplies by its position.
+	#Index position for ISBN numbers start at 1, not 0.
+	#Adds each iteration to total
+	isbn.length.times do
+		sum = sum + isbn_num[index_pos].to_i * index_count
+		index_pos += 1
+		index_count +=1
 
 	end
+	#Sum and mod 11 gets assigned to check_digit
 	check_digit = sum % 11
-	if check_digit == 10
-		clean_isbn << "x"
-		digit = "x"
-	elsif check_digit == 0
-		id <<"0"
-		digit = "0"
-	else id << check_digit.to_s
-		digit = check_digit.to_s
+	# Testing the check digit, if equals 10 and isbn_num ends with 'x' or 'X', its valid.
+	if check_digit = 10 &&!!isbn_num[-1].match(/[xX]/) == true
+		valid = true
+		#If check_digit does not equal ten, but matches the last character of isbn_num
+	#It is a valid ISBN10.  Convert the last digit of isbn_num to an integer for proper comparison.
+	elsif
+		isbn_num[-1].to_i == check_digit
+				valid = true
 	end
-	digit
-end			
-# I had help with this today and I am trying to understand it 
-#but as of yet, I don't, at least not totally.
+	#Calls valid, which is false if none of the conditions were met.
+	#True if the calculations check out and ISBN is valid.
+	valid
 
-#on line 22 we are creating a loop through each index position and 
-#multiplying each value by the corosponding index position after 
-#changing both to an integer do be able to do so.
-#lines 26 through 32 are checking the sum of the digits that have 
-#been multiplied and applied modulo 11, to see if the modulo of 
-#either 1 or x (in an instance of x being substitued for 10) 
-#equals the checknum or last digit.
-# I'm confused about the << on 31 and 33. I thought that it
-# was used to push items in an array, but it doesnt' seem to 
-# apply here.... class << self maybe??? But that is confusing 
-# as well. My brain hurts tonight so I will work on it tomoroww.
-# Okay..... from Marv in slack as for homework instructions.
-# copied and pasted to have readily accessible...
+end		
+def check_sum13(isbn_num)
 
-# REQUIREMENTS FOR ISBN
-# ISBN-10 is made up of 9 digits plus a check digit (which
-# may be 'X') and ISBN-13 is made up of 12 digits plus a
-# check digit. Spaces and hyphens may be included in a code,
-# but are not significant. This means that 9780471486480 is
-# equivalent to 978-0-471-48648-0 and 978 0 471 48648 0.
-# The check digit for ISBN-10 is calculated by multiplying
-# each digit by its position (i.e., 1 x 1st digit, 2 x 2nd
-# digit, etc.), summing these products together and taking
-# modulo 11 of the result (with 'X' being used if the result
-# is 10).
-# The check digit for ISBN-13 is calculated by multiplying
-# each digit alternately by 1 or 3 (i.e., 1 x 1st digit,
-# 3 x 2nd digit, 1 x 3rd digit, 3 x 4th digit, etc.), summing
-# these products together, taking modulo 10 of the result
-# and subtracting this value from 10, and then taking the
-# modulo 10 of the result again to produce a single digit.
-# Examples of valid ISBN-13:
-# "9780470059029"
-# "978-0-13-149505-0"
-# "978 0 471 48648 0"
-# Examples of valid ISBN-10:
-# "0471958697"
-# "0-321-14653-0"
-# "877195869x"
-# Examples of invalid ISBNs:
-# "4780470059029"
-# "0-321@14653-0"
-# "877195x869"
-# ""
-# " "
-# "-"
-# Example of how the ISBN-10 sumcheck is calculated:
-# first 9 digits of an isbn10: 742139476
-# create checksum:
-# sum = 1*7 + 2*4 + 3*2 + 4*1 + 5*3 + 6*9 7*4 + 8*7 + 9*6
-# sum = 7 + 8 + 6 + 4 + 15 + 54 + 28 + 56 + 54
-# sum = 232
-# checksum = 232%11
-# checksum = 1
-# isbn = 7421394761 
+	valid = false
+	sum = 0
+	index_pos = 0
+	index_count = 1
+	counter = isbn_num.chop
+	#alternate between multiplying by 1 and 3
+	#If index % 2 equals 0 we have an even number, so multiply by 1
+	#Otherwise multiply by 3
+	#Add to sum each iteration
+	counter.length.times do
+		if index % 2 == 0
+			sum = sum + isbn_num[index_pos].to_i *  1
+			else 
+			sum = sum + isbn_num[index_pos].to_i * 3
+		end
+		index_pos += 1
+		index_count += 1
+	end	
+	
+	check_digit = (10 - (sum %10))% 10
+	#Calculates check digit
+	if check_digit == isbn_num[-1].to_i
+		valid = true
 
-
-
-
-
+	end
+	valid
+end	
 
 
