@@ -1,13 +1,21 @@
 isbn_num = "0471958697"	
 def isbn_remove(isbn_num)
 #remove spaces and hyphens
-    isbn_num.delete(' ''-') 
+    isbn_num.gsub!(/[-, ]/,"")
+
+     # [^0-9A-Za-z] saw someone else use this but I'm not sure yet what it means.
+    isbn_num.split(",").map(&:to_i)
+    #.split (',') changes the string to an array, and .map basically maps each posiiton and 
+    #(&:to_i) tells when map to also change each to and integer.
+    isbn_num
 end
 
 def length_letter10(isbn_num)
+	array = []
 	#Made two functions to do letter check differently based on length
 #If it is length 10 it checks only the first 9 characters
 #using .chop because the last character CAN be a letter.
+	
 	num = isbn_num.chop
      if num.length == 0
     	true
@@ -17,24 +25,26 @@ def length_letter10(isbn_num)
     end	
 end
 
-def legnth_letter13(isbn_num)
+def length_letter13(isbn_num)
 	#If it is 13 it checks all characters because there can be no letters.
 		num = isbn_num.delete('0-9')
 		if num.length == 0
 			true
-		else
-			false
-		end
+			else
+				false
+			end
 end
+
 
 def check_last_index10(isbn_num)
 	#Checks to see if the item in the last index position is either a single digit # or x.
 	if isbn_num[-1].match(/[0-9xX]/) 
 		true
-	else
-		false
-	end
+		else
+			false
+		end
 end
+
 
 
 
@@ -61,7 +71,8 @@ def check_sum10(isbn_num)
 	#Sum and mod 11 gets assigned to check_digit
 	check_digit = sum % 11
 	# Testing the check digit, if equals 10 and isbn_num ends with 'x' or 'X', its valid.
-	if check_digit = 10 &&!!isbn_num[-1].match(/[xX]/) == true
+	
+	if check_digit = 10 && isbn_num[-1].match(/[xX]/) == true
 		valid = true
 		#If check_digit does not equal ten, but matches the last character of isbn_num
 	#It is a valid ISBN10.  Convert the last digit of isbn_num to an integer for proper comparison.
@@ -69,8 +80,8 @@ def check_sum10(isbn_num)
 		isbn_num[-1].to_i == check_digit
 				valid = true
 	end
-	#Calls valid, which is false if none of the conditions were met.
-	#True if the calculations check out and ISBN is valid.
+	# valid is false if none of the conditions were met.
+	#True if the calculations and ISBN is valid.
 	valid
 
 end		
@@ -103,5 +114,4 @@ def check_sum13(isbn_num)
 	end
 	valid
 end	
-
 

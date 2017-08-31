@@ -2,13 +2,27 @@ require"minitest/autorun"
 require_relative "isbn_function.rb"
 class Testisbn < Minitest::Test
 
-    def test_isbn_number10_digits
-        isbn_num ="0471958697"
-        assert_equal(true,isbn_length(isbn_num))
-    end
+    # def test_isbn_number10_digits
+    #     isbn_num = "0471958697"
+    #     assert_equal(true,length_letter10(isbn_num))
+    # end
+    def test_remove_spaces
+		results = isbn_remove('12  3 4 5')
+		assert_equal('12345', results)
+	end
+
+	def test_remove_hypens
+		results = isbn_remove('1-2-3-4-5')
+		assert_equal('12345', results)
+	end
+	def test_remove_hypens_and_spaces
+		results = isbn_remove('1-2-3-4-5 6 7 8 9')
+		assert_equal('123456789', results)
+	end
+
     def test_isbn_wrong_number_digits
         isbn_num ="047195897"
-        assert_equal(false,isbn_length(isbn_num))
+        assert_equal(false,length_letter10(isbn_num))
     end
     def test_isbn_dashes
         isbn_num ="047-195-86-97"
@@ -16,12 +30,22 @@ class Testisbn < Minitest::Test
     end
     def test_isbn_number13_digits
     	isbn_num ="9780470059029"
-    	assert_equal(true, isbn_length(isbn_num))
+    	assert_equal(true, length_letter13(isbn_num))
     end
-    def test_letters
-    	isbn_num = "12547d1dk2"
-    	assert_equal(false,isbn_remove(isbn_num))
-    end
+    def test_ten_length_with_X_true
+		results = check_last_index10('123456789X')
+		assert_equal(true, results)
+	end
+    def test_for_letters_in_first_nine
+		results = length_letter13('123mng456l456')
+		assert_equal(false, results)
+	end
+	def test_last_index_X
+		results = check_last_index10('123456789X')
+		assert_equal(true, results)
+	end
+
+    
  end
  # Okay..... from Marv in slack as for homework instructions.
 # copied and pasted to have readily accessible...
