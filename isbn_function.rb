@@ -39,7 +39,7 @@ def length_letter13(isbn_num)
 			true
 			else
 				false
-			end
+		end
 end
 
 
@@ -49,7 +49,7 @@ def check_last_index10(isbn_num)
 		true
 		else
 			false
-		end
+	end
 end
 
 
@@ -79,14 +79,14 @@ def check_sum10(isbn_num)
 	check_digit = sum % 11
 	# Testing the check digit, if equals 10 and isbn_num ends with 'x' or 'X', its valid.
 	
-	if check_digit = 10 && isbn_num[-1].match(/[xX]/) == true
-		valid = true
-		#If check_digit does not equal ten, but matches the last character of isbn_num
-	#It is a valid ISBN10.  Convert the last digit of isbn_num to an integer for proper comparison.
-	elsif
-		isbn_num[-1].to_i == check_digit
+		if check_digit = 10 && isbn_num[-1].match(/[xX]/) == true
+			valid = true
+			#If check_digit does not equal ten, but matches the last character of isbn_num
+			#It is a valid ISBN10.  Convert the last digit of isbn_num to an integer for proper comparison.
+			elsif
+				isbn_num[-1].to_i == check_digit
 				valid = true
-	end
+		end
 	# valid is false if none of the conditions were met.
 	#True if the calculations and ISBN is valid.
 	valid
@@ -107,7 +107,7 @@ def check_sum13(isbn_num)
 		if index % 2 == 0
 			sum = sum + isbn_num[index_pos].to_i *  1
 			else 
-			sum = sum + isbn_num[index_pos].to_i * 3
+				sum = sum + isbn_num[index_pos].to_i * 3
 		end
 		index_pos += 1
 		index_count += 1
@@ -115,10 +115,40 @@ def check_sum13(isbn_num)
 	
 	check_digit = (10 - (sum %10))% 10
 	#Calculates check digit
-	if check_digit == isbn_num[-1].to_i
-		valid = true
+		if check_digit == isbn_num[-1].to_i
+			valid = true
 
-	end
+		end
 	valid
 end	
+#Runs all functions in order related to ISBN10
+#If length_letter10 is true, moves to next line
+#If check_last_index10 is true, moves to next line
+#If check_sum10 is true, assigns true to valid
+#Calls valid, which is false unless all the conditions are met.
+def combined_isbn_ten(isbn_num)
+	valid = false
+	if length_letter10(isbn_num)
+		if check_last_index10(isbn_num)
+			if check_sum10(isbn_num)
+				valid = true
+			end
+		end
+	end
+	valid
+end
+#Runs all functions in order related to ISBN13
+#If length_letter13 is true, moves to next line
+#If check_sum13 is true, assigns true to valid
+#Calls valid, which gives us false unless all the conditions are met.
+def combined_isbn_13(isbn_num)
+	valid = false
+	if length_letter13(isbn_num)
+		if check_sum13(isbn_num)
+			valid = true
+			
+		end
+	end
+	valid
 
+end
