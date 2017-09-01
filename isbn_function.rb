@@ -1,4 +1,4 @@
-isbn_num = "0471958697"	
+
 def isbn_remove(isbn_num)
 #remove spaces and hyphens
     isbn_num.gsub!(/[-, ]/,"")
@@ -12,13 +12,18 @@ def isbn_remove(isbn_num)
 end
 
 def length_letter10(isbn_num)
-	array = []
+
 	#Made two functions to do letter check differently based on length
 #If it is length 10 it checks only the first 9 characters
 #using .chop because the last character CAN be a letter.
 	
 	num = isbn_num.chop
-     if num.length == 0
+	num.gsub!(/[a-z]/, "")
+	num
+	
+	#deletes all numbers, leaving only letters. If 0 then there are no letters
+	# and is true, if there are objects left, then it will fail.
+     if num.length == 9
     	true
     	
     	else

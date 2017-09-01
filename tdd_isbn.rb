@@ -2,10 +2,10 @@ require"minitest/autorun"
 require_relative "isbn_function.rb"
 class Testisbn < Minitest::Test
 
-    # def test_isbn_number10_digits
-    #     isbn_num = "0471958697"
-    #     assert_equal(true,length_letter10(isbn_num))
-    # end
+    def test_isbn_number10_digits
+        isbn_num = "0471958697"
+        assert_equal(true,length_letter10(isbn_num))
+    end
     def test_remove_spaces
 		results = isbn_remove('12  3 4 5')
 		assert_equal('12345', results)
@@ -21,7 +21,7 @@ class Testisbn < Minitest::Test
 	end
 
     def test_isbn_wrong_number_digits
-        isbn_num ="047195897"
+        isbn_num ="04719589"
         assert_equal(false,length_letter10(isbn_num))
     end
     def test_isbn_dashes
