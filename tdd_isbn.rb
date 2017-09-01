@@ -6,6 +6,7 @@ class Testisbn < Minitest::Test
         isbn_num = "0471958697"
         assert_equal(true,length_letter10(isbn_num))
     end
+
     def test_remove_spaces
 		results = isbn_remove('12  3 4 5')
 		assert_equal('12345', results)
@@ -15,31 +16,42 @@ class Testisbn < Minitest::Test
 		results = isbn_remove('1-2-3-4-5')
 		assert_equal('12345', results)
 	end
+
 	def test_remove_hypens_and_spaces
 		results = isbn_remove('1-2-3-4-5 6 7 8 9')
 		assert_equal('123456789', results)
 	end
 
-    def test_isbn_wrong_number_digits
+    def test_isbn_wrong_number_digits10
         isbn_num ="04719589"
         assert_equal(false,length_letter10(isbn_num))
     end
+
     def test_isbn_dashes
         isbn_num ="047-195-86-97"
         assert_equal("0471958697",isbn_remove(isbn_num))
     end
+
     def test_isbn_number13_digits
-    	isbn_num ="9780470059029"
-    	assert_equal(true, length_letter13(isbn_num))
+    	isbn_num = "9780470059029"
+    	assert_equal(true, length_letter13("9780470059029"))
     end
+
+    def test_isbn_letters_13
+    	results = length_letter13('123rt56yu125r')
+    	assert_equal(false, results)
+    end
+
     def test_ten_length_with_X_true
 		results = check_last_index10('123456789X')
 		assert_equal(true, results)
 	end
+
     def test_for_letters_in_first_nine
 		results = length_letter13('123mng456l456')
 		assert_equal(false, results)
 	end
+
 	def test_last_index_X
 		results = check_last_index10('123456789X')
 		assert_equal(true, results)

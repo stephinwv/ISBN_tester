@@ -33,8 +33,9 @@ end
 
 def length_letter13(isbn_num)
 	#If it is 13 it checks all characters because there can be no letters.
-		num = isbn_num.delete('0-9')
-		if num.length == 0
+
+		num = isbn_num.gsub(/[a-z]/, "")
+		if num.length == 13
 			true
 			else
 				false
