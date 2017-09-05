@@ -4,7 +4,7 @@ class Testisbn < Minitest::Test
 
     def test_isbn_number10_digits
         isbn_num = "0471958697"
-        assert_equal(true,length_letter10(isbn_num))
+        assert_equal(true,character(isbn_num))
     end
 
     def test_remove_spaces
@@ -24,7 +24,7 @@ class Testisbn < Minitest::Test
 
     def test_isbn_wrong_number_digits10
         isbn_num ="04719589"
-        assert_equal(false,length_letter10(isbn_num))
+        assert_equal(true,character(isbn_num))
     end
 
     def test_isbn_dashes
@@ -53,13 +53,67 @@ class Testisbn < Minitest::Test
 	end
 
 	def test_last_index_X
-		results = check_last_index10('123456789X')
+		results = character('1234%6789X')
+		assert_equal(false, results)
+	end
+	def test_check_sum 
+		results = check_sum10("0471958697")
 		assert_equal(true, results)
 	end
-
-    
+	def test_checkx
+		results = check_sum10("047191111x")
+		assert_equal(false, results)
+	end
+    def test_checkvx
+    	results = check_sum10("877195869x")
+    	assert_equal(true, results)
+    end
+    def test_checkvX
+    	results = check_sum10("877195869X")
+    	assert_equal(true, results)
+    end
+ 	def test_checksum13
+ 		results = check_sum13("9780470059029")
+ 		assert_equal(true, results)
+ 	end
+ 	def test_checksum13f
+ 		results = check_sum13("4780470059029")
+ 		assert_equal(false, results)
+ 	end
+ 	def test_combined10
+ 		results = combined_isbn_ten("877195869x")
+ 		assert_equal(true, results)
+ 	end
+ 	def test_combined13
+ 		results = combined_isbn_13("9780470059029")
+ 		assert_equal(true, results)
+ 	end
+ 	def test_combined13f
+ 		results = combined_isbn_13("4780470059029")
+ 		assert_equal(false, results)
+ 	end
+ 	def test_overall
+ 		results = main_isbn("877195869x") 
+ 		assert_equal(true, results)
+ 	end
+ 	def test_overall10f
+ 		results =  main_isbn("047191111x")
+ 		assert_equal(false, results)
+ 	end
+ 	def test_overall13
+ 		results = main_isbn("9780470059029") 
+ 		assert_equal(true, results)
+ 	end
+ 	def test_overall113f
+ 		results =  main_isbn("4780470059029")
+ 		assert_equal(false, results)
+ 	end
+ 	def test_valid10
+ 		results = main_isbn("#%7195869x") 
+ 		assert_equal(false, results)
+ 	end
  end
- # Okay..... from Marv in slack as for homework instructions.
+ # # Okay..... from Marv in slack as for homework instructions.
 # copied and pasted to have readily accessible...
 
 # REQUIREMENTS FOR ISBN
