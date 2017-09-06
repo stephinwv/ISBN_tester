@@ -1,9 +1,15 @@
+require 'csv'
+
+
+
+
+
 
 def main_isbn(isbn_num)
 	if isbn_num.length == 10
-		combined_isbn_ten(isbn_num)
+		isbn_remove(isbn_num)
 	elsif isbn_num.length == 13
-		combined_isbn_13(isbn_num)
+		isbn_remove(isbn_num)
 	else
 		false
 	end
