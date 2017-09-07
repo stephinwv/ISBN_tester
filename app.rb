@@ -17,7 +17,7 @@ get '/results' do
 	valid = params[:valid]
 
 	valid = main_isbn(isbn)
-	valid = main_isbn(isbn)
+	
 	puts "Made it to get results, your isbn is #{isbn}, it is #{valid}"
 	erb :results, :locals=>{:isbn=> isbn, :valid=> valid}
 end
@@ -27,7 +27,7 @@ post '/results' do
 	
 	valid = params[:valid]
 	valid = main_isbn(isbn)
-	valid = main_isbn(isbn)
+	
 	erb :results, :locals=>{:isbn=> isbn, :valid=> valid}
 	puts "#{isbn10} is your number, it is #{valid}"
 	redirect '/index?'

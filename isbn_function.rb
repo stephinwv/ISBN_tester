@@ -1,5 +1,29 @@
 require 'csv'
 
+def csv_func
+	input = CSV.read('isbn.csv')
+
+	input.shift
+
+	csv_array = []
+
+	input.each do |value|
+		if main_isbn(value[1]).to_s == "true"
+			value.push("valid")
+		else
+			value.push("invalid")
+		end
+		csv_array.push(value)
+		
+		CSV.open("output_isbn.csv", "w") do |out|
+		out << csv_array
+		csv_array.delete(/""/)
+		end
+
+	end
+
+end
+
 def main_isbn(isbn_num)
     rem_isbn = isbn_remove(isbn_num)
     if isbn_num.length == 10
@@ -119,3 +143,4 @@ def combined_isbn_13(isbn_num)
 	end
 	valid
 end
+csv_func
