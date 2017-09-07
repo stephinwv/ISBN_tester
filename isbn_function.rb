@@ -1,29 +1,35 @@
 require 'csv'
-
-
-
-
-
-
 def main_isbn(isbn_num)
-	if isbn_num.length == 10
-		isbn_remove(isbn_num)
-	elsif isbn_num.length == 13
-		isbn_remove(isbn_num)
-	else
-		false
-	end
+   if isbn_num.length == 10
+       rem_isbn = isbn_remove(isbn_num)
+		p " rem_isbn10 is #{rem_isbn}"
+       char_isbn = character(rem_isbn)
+		p "char_isbn10 is #{char_isbn}"
+        	if  character(char_isbn) == true
+       		combined_isbn_ten(char_isbn)
 
+     
+   elsif isbn_num.length == 13
+        rem_isbn = isbn_remove(isbn_num)
+        p " rem_isbn  t4is #{rem_isbn}"
+        char_isbn = character(rem_isbn)
+        p "char_isbn is #{char_isbn}"
+        	if  length_letter13(char_isbn) == true
+        	p " len_isbn is #{len_isbn}"
+        	combined_isbn_13(len_isbn)
+        	end
+       		end
+   else
+      false
+   end
 end
-			
+
 
 def isbn_remove(isbn_num)
-
 #remove spaces and hyphens
     isbn_num.gsub!(/[-, ]/,"")
     #gsub literally returns a copy of str with the all occurrences of pattern 
     #substituted for the second argument. 
- 
     isbn_num.split(",").map(&:to_i)
     #.split (',') changes the string to an array, and .map basically maps each posiiton and 
     #(&:to_i) tells when map to also change each to and integer.
@@ -31,21 +37,10 @@ def isbn_remove(isbn_num)
 end
 
 def character(isbn_num)
-
-	#Made two functions to do letter check differently based on length
-#If it is length 10 it checks only the first 9 characters
-#using .chop because the last character CAN be a letter.
-	
-	
 valid =  false	
-	
  	if isbn_num.chop !~ /\D/  
-    valid = true
-		
-    	
-	
-    	
-    	else
+    	valid = true
+    else
     	valid = false
     end	
     valid
@@ -53,19 +48,13 @@ end
 
 
 	
-	#deletes all numbers, leaving only letters. If 0 then there are no letters
-	# and is true, if there are objects left, then it will fail.
-   
-
-
 def length_letter13(isbn_num)
 	#If it is 13 it checks all characters because there can be no letters.
-
 		num = isbn_num.gsub(/[a-z]/, "")
 		if num.length == 13
 			true
-			else
-				false
+		else
+			false
 		end
 end
 
@@ -74,8 +63,8 @@ def check_last_index10(isbn_num)
 	#Checks to see if the item in the last index position is either a single digit # or x.
 	if isbn_num[-1].match(/[0-9xX]/) 
 		true
-		else
-			false
+	else
+		false
 	end
 end
 
@@ -102,11 +91,9 @@ def check_sum10(isbn_num)
 		sum = sum + isbn_num[index_pos].to_i * index_count
 		index_pos += 1
 		index_count +=1
-
 	end
 	#Sum and mod 11 gets assigned to check_digit
 	check_digit = sum % 11
-
 	# Testing the check digit, if equals 10 and isbn_num ends with 'x' or 'X', its valid.
 		# p "isbn_num[-1] #{isbn_num[-1]}"
 		if  check_digit == 10 && isbn_num[-1] == "X" || check_digit == 10 && isbn_num[-1] == "x"
@@ -120,11 +107,8 @@ def check_sum10(isbn_num)
 	# valid is false if none of the conditions were met.
 	#True if the calculations and ISBN is valid.
 	valid
-
 end		
 def check_sum13(isbn_num)
-	
-
 	valid = false
 	sum = 0
 	index_pos = 0
@@ -149,38 +133,29 @@ def check_sum13(isbn_num)
 		index_count += 1
 		# p "sum is #{sum}"
 	end	
-	
 	check_digit = (10 - (sum %10))% 10
 	#Calculates check digit
 		if check_digit == isbn_num[-1].to_i
 			valid = true
-
 		end
-	
 	valid
 end	
 #Runs all functions in order related to ISBN10
 #If length_letter10 is true, moves to next line
-#If check_last_index10 is true, moves to next line
+#If character(isbn_num) is true, moves to next line
 #If check_sum10 is true, assigns true to valid
 #Calls valid, which is false unless all the conditions are met.
 def combined_isbn_ten(isbn_num)
 	# p "isbn_num is #{isbn_num}"
-
 valid = false
 	if character(isbn_num) == true
-
-		# if check_last_index10(isbn_num) == true
-			if check_sum10(isbn_num) == true
+		if check_sum10(isbn_num) == true
 				valid = true
-			end
-		# end
+		end
 	else
 		valid = false
 	end
-
 	valid
-	
 end
 #Runs all functions in order related to ISBN13
 #If length_letter13 is true, moves to next line
@@ -189,18 +164,11 @@ end
 def combined_isbn_13(isbn_num)
 	valid = false
 	if length_letter13(isbn_num) == true
-
 		if check_sum13(isbn_num) == true
 			valid = true
 		end
-		
 	else
 	valid = false
-
 	end
-
-	
-	
-	
 	valid
 end

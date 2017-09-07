@@ -21,7 +21,7 @@ get '/results' do
 	erb :results, :locals=>{:isbn10=> isbn10, :isbn13=> isbn13, :valid=> valid}
 end
 post '/results' do
-	
+		puts "RESULT POST #{isbn10} is your number, it is #{valid}"
 	isbn10 = params[:isbn10]
 	isbn13 = params[:isbn13]
 	valid = params[:valid]
