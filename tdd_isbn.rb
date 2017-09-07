@@ -108,10 +108,10 @@ class Testisbn < Minitest::Test
  		results =  main_isbn("4780470059029")
  		assert_equal(false, results)
  	end
- 	def test_valid10
- 		results = main_isbn("#%7195869x") 
- 		assert_equal(false, results)
- 	end
+ 	# def test_valid10
+ 	# 	results = main_isbn("#+^719569x") 
+ 	# 	assert_equal(false, results)
+ 	# end
  end
  # # Okay..... from Marv in slack as for homework instructions.
 # copied and pasted to have readily accessible...
