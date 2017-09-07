@@ -1,19 +1,21 @@
 require 'csv'
 
 def main_isbn(isbn_num)
-	if isbn_num.length == 10
-		isbn_remove(isbn_num)
-		rem_isbn = isbn_remove(isbn_num)
-		if 
-		character(rem_isbn)==true		
-		combined_isbn_ten(rem_isbn)
-		end
-
-	elsif isbn_num.length == 13
-		combined_isbn_13(isbn_num)
-		else
-			false
-	end
+    rem_isbn = isbn_remove(isbn_num)
+    if isbn_num.length == 10
+         # rem_isbn = isbn_remove(isbn_num)
+        
+        if character(rem_isbn)==true        
+        combined_isbn_ten(rem_isbn)
+        
+        else
+            false
+        end
+    elsif isbn_num.length == 13
+        combined_isbn_13(rem_isbn)
+    else
+            false
+    end
 end
 			
 
@@ -95,15 +97,15 @@ def check_sum13(isbn_num)
 end	
 
 def combined_isbn_ten(isbn_num)
-valid = false
+#valid = false
 	if character(isbn_num) == true
 		if check_sum10(isbn_num) == true
-				valid = true
+			 true
 		end
 	else
-		valid = false
+		false
 	end
-	valid
+	#valid
 end
 
 def combined_isbn_13(isbn_num)
