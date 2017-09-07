@@ -1,29 +1,19 @@
 require 'csv'
+
 def main_isbn(isbn_num)
-   if isbn_num.length == 10
-       rem_isbn = isbn_remove(isbn_num)
-		p " rem_isbn10 is #{rem_isbn}"
-       char_isbn = character(rem_isbn)
-		p "char_isbn10 is #{char_isbn}"
-        	if  character(char_isbn) == true
-       		combined_isbn_ten(char_isbn)
+	if isbn_num.length == 10
+		isbn_remove(isbn_num)
+		if character(isbn_num)==true		
+		combined_isbn_ten(isbn_num)
+		end
 
-     
-   elsif isbn_num.length == 13
-        rem_isbn = isbn_remove(isbn_num)
-        p " rem_isbn  t4is #{rem_isbn}"
-        char_isbn = character(rem_isbn)
-        p "char_isbn is #{char_isbn}"
-        	if  length_letter13(char_isbn) == true
-        	p " len_isbn is #{len_isbn}"
-        	combined_isbn_13(len_isbn)
-        	end
-       		end
-   else
-      false
-   end
+	elsif isbn_num.length == 13
+		combined_isbn_13(isbn_num)
+		else
+			false
+	end
 end
-
+			
 
 def isbn_remove(isbn_num)
 #remove spaces and hyphens
