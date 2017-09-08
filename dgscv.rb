@@ -12,7 +12,7 @@ CSV.foreach('input_isbn_file.csv') do |row|
         row << stuff
         p row
        big_array << row
-    CSV.open("output_isbn_file.csv", "w") do |out|
+    CSV.open("output_isbn_file.csv", "w") do |out|.join
 		out << big_array
 	end
 end 
