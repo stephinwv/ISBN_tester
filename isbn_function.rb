@@ -1,31 +1,60 @@
 require 'csv'
 
-def csv_func
 
-	input = CSV.read("isbn.csv")
+def csv_func2
+	write_file = File.open("output_isbn.csv", "w")
 
-	input.shift
-
-	csv_array = []
-
-	input.each do |row|
+	CSV.foreach('isbn.csv') do |row|
 		if main_isbn(row[1]).to_s== "true"
-			row.push("valid")
-		else
-			row.push("invalid")
+			row << ("valid")
+				else
+			row << ("invalid")
 		end
-		csv_array.push(row)
-		
-		CSV.open("output_isbn.csv", "w", {headers: false, :row_sep => "\r\n", :col_sep => ", "}) do |out|
-		
-		out << csv_array.flatten!
-
-
-		end
-
+			write_file.puts row[0] + ", " + row[1] + ", " + row[2]
 	end
-csv_array
 end
+
+# def csv_func
+# 	csv_array = []
+# 	input = CSV.foreach("isbn.csv")do |row|
+		
+		# if main_isbn(row[1]).to_s== "true"
+		# 	row.push("valid")
+		# else
+		# 	row.push("invalid")
+		# end
+		
+# 	csv_array.push(row)
+# 	end
+
+# 		# csv_array = csv_array[0].split(",")
+# 		CSV.open("output_isbn.csv", "w", {:headers=> :first_row, :col_sep => ", \t"}) do |row|
+		
+# 		csv_array.flatten.push(row)
+# 		csv_array.each do |putsrow|
+# 			puts putsrow
+# 		end
+
+
+
+
+# 		# file = File.new("output_isbn.csv", "r")
+# 		# while (crow = file.gets)
+#   #   		crow.chomp 
+#   #   		list = crow.split(/\n/).flatten!
+  			
+# 		# .map(&:inspect).join(", ")
+# 		# end
+# 		# list
+	
+# 	row.class
+# 	puts "row is #{row}"
+	
+# 	puts "#{csv_array}"
+
+# 	end
+	
+# end
 
 def main_isbn(isbn_num)
     rem_isbn = isbn_remove(isbn_num)
@@ -146,4 +175,5 @@ def combined_isbn_13(isbn_num)
 	end
 	valid
 end
-csv_func
+# csv_func
+csv_func2
