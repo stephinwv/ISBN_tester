@@ -2,23 +2,25 @@ require 'csv'
 
 def csv_func
 
-	input = CSV.read('isbn.csv')
+	input = CSV.read("isbn.csv")
 
 	input.shift
 
 	csv_array = []
 
 	input.each do |row|
-		if main_isbn(row[1]).to_s == "true"
+		if main_isbn(row[1]).to_s== "true"
 			row.push("valid")
 		else
 			row.push("invalid")
 		end
 		csv_array.push(row)
 		
-		CSV.open("output_isbn.csv", "wb", col_sep: "\n",force_quotes: false) do |out|
-		out << csv_array.flatten!
+		CSV.open("output_isbn.csv", "w", {headers: false, :row_sep => "\r\n", :col_sep => ", "}) do |out|
 		
+		out << csv_array.flatten!
+
+
 		end
 
 	end
