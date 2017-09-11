@@ -1,5 +1,20 @@
 require 'sinatra'
 require_relative 'isbn_function.rb'
+require 'rubygems'
+require 'aws-sdk'
+require 'csv'
+ load "./local_env.rb" 
+def send_data_to_s3_bucket
+    AWS::S3::Base.establish_connection!(
+    :access_key_id => ENV['S3_KEY'],
+    :secret_access_key => ENV['S3_SECRET']  
+    )
+    file = File.open(isbn.csv, 'w')
+	obj.write(file)
+       
+       
+end
+
 
 get '/' do
 	erb :index	
@@ -35,5 +50,7 @@ end
 get '/index' do
 	erb :index
 end
-
+get '/isbn.erb' do
+ erb :isbn
+end
 

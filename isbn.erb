@@ -1,0 +1,6 @@
+<%# read an object from S3 to a file%>
+<%File.open('isbn.csv', 'wb') do |file|%>
+  <%bucket.objects['key'].read do |chunk|%>
+    <%file.write(chunk)%>
+  <%end%>
+<%end%>

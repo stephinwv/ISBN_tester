@@ -1,5 +1,9 @@
 require 'csv'
 
+# :access_key_id => ENV['S3_KEY'],
+# :secret_access_key => ENV['S3_SECRET'] 
+# bucket => Env[’S3_BUCKET’]
+# file => ENV[’S3File’ 
 
 def csv_func2
 	write_file = File.open("output_isbn.csv", "w")
